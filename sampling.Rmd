@@ -1,0 +1,35 @@
+---
+title: "Google Sheets"
+author: "Karen Jiang"
+date: "3/3/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(googlesheets4)
+library(fs)
+library(tidyverse)
+
+sheets_deauth()
+x <- read_sheet(ss = "14HmwN2cEVAJHupuehCuLdwG9BXtR3COrxDgaaylLhkA")
+
+
+```
+
+```{r}
+
+x <- x %>%
+  mutate(`Percent Red` = ifelse(`Percent Red` > 1, 
+                                `Percent Red`/100, 
+                                `Percent Red`),
+         `Percent White` = ifelse(`Percent White` > 1, 
+                                  `Percent White`/100, 
+                                  `Percent White`))
+
+ggplot(x, aes(x = Red)) + geom_bar(fill="Red") +
+  labs(title = "Distribution of Red Beads")
+
+```
+
