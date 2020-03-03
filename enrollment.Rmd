@@ -1,0 +1,41 @@
+---
+title: "New Class Enrollment"
+author: "Karen Jiang"
+date: "3/3/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+library(tidyverse)
+library(readxl)
+library(janitor)
+
+
+url_current <- "https://registrar.fas.harvard.edu/files/fas-registrar/files/class_enrollment_summary_by_term_12.20.19.xlsx"
+url_old <- "https://registrar.fas.harvard.edu/files/fas-registrar/files/class_enrollment_summary_by_term_3.22.19_0.xlsx"
+
+download.file(url = url_current, 
+              destfile = "current.xlsx")
+
+download.file(url = url_old, 
+              destfile = "old.xlsx")
+
+current <- read_excel("current.xlsx", 
+                      skip = 3, 
+                      col_names = TRUE) %>%
+  clean_names() %>%
+  filter(! is.na(course_name))
+
+old <- read_excel("old.xlsx", 
+                  skip = 3, 
+                  col_names = TRUE) %>%
+  clean_names() %>%
+  filter(! is.na(course_name))
+
+
+
+```
+
