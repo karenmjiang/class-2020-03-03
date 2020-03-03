@@ -36,6 +36,12 @@ old <- read_excel("old.xlsx",
   filter(! is.na(course_name))
 
 
-
+new_courses <- current %>%
+  anti_join(old, by = "course_id") %>%
+  arrange(desc(total))
+  
+total <- current %>%
+  full_join(old, by="course_id")
+new_courses
 ```
 
